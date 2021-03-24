@@ -14,6 +14,18 @@ var trans_x: float = -5
 var trans_y: float = 10
 var trans_z: float = 5
 
+var rot_x: float
+var rot_y: float
+var rot_z: float
+
+var scale_x: float = 1
+var scale_y: float = 1
+var scale_z: float = 1
+
+var shear_x: float = 0
+var shear_y: float = 0
+var shear_z: float = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	source = PoolVector3Array()
@@ -30,7 +42,48 @@ func _ready():
 	transform()
 	
 	# pass # Replace with function body.
+
+func change_translation_x(value: float):
+	# Range from -50 to 50
+	trans_x = (value - 50)
+	transform()
+
+func change_translation_y(value: float):
+	trans_y = (50 - value)
+	transform()
 	
+func rotate_x(value: float):
+	rot_x = value
+	transform()
+	
+func rotate_y(value: float):
+	rot_x = value
+	transform()
+	
+func rotate_z(value: float):
+	rot_x = value
+	transform()
+	
+func change_scale_x(value: float):
+	scale_x = value
+	transform()
+
+func change_scale_y(value: float):
+	scale_y = value
+	transform()
+	
+func change_shear_x(value: float):
+	shear_x = value
+	transform()
+	
+func change_shear_y(value: float):
+	shear_y = -value
+	transform()
+	
+func change_shear_z(value: float):
+	shear_z = -value
+	transform()
+
 func update_mesh():
 	
 	var arr_mesh = ArrayMesh.new()
