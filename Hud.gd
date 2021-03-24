@@ -13,18 +13,18 @@ func _on_TranslationSY_value_changed(value):
 	Drawing.change_translation_y(value)
 	
 func _on_TranslationSZ_value_changed(value):
-	pass # Replace with function body.
-
-func _on_RotSX_value_changed(value):
-	pass # Replace with function body.
+	Drawing.change_translation_y(value)
 
 
-func _on_RotSY_value_changed(value):
-	pass # Replace with function body.
+func _on_RotSX_value_changed(value: float):
+	Drawing.rotate_x(value)
 
+func _on_RotSY_value_changed(value: float):
+	Drawing.rotate_y(value)
 
-func _on_RotSZ_value_changed(value):
-	pass # Replace with function body.
+func _on_RotSZ_value_changed(value: float):
+	Drawing.rotate_z(value)
+
 
 func _on_ScaleSX_value_changed(value: float):
 	Drawing.change_scale_x(value)
@@ -32,17 +32,19 @@ func _on_ScaleSX_value_changed(value: float):
 func _on_ScaleSY_value_changed(value: float):
 	Drawing.change_scale_y(value)
 
-func _on_ScaleSZ_value_changed(value):
-	pass # Replace with function body.
-	
-func _on_ShearSX_value_changed(value):
+func _on_ScaleSZ_value_changed(value: float):
+	Drawing.change_scale_z(value)
+
+
+func _on_ShearSX_value_changed(value: float):
 	Drawing.change_shear_x(value)
 
-func _on_ShearSY_value_changed(value):
-		Drawing.change_shear_y(value)
+func _on_ShearSY_value_changed(value: float):
+	Drawing.change_shear_y(value)
 		
-func _on_ShearSZ_value_changed(value):
-	pass # Replace with function body.
+func _on_ShearSZ_value_changed(value: float):
+	Drawing.change_shear_z(value)
+
 
 func _on_Reset_pressed():
 	get_tree().reload_current_scene()
@@ -55,8 +57,3 @@ func _on_Square_pressed():
 	
 func _on_Bear_pressed():
 	Drawing.bear()
-
-
-
-
-

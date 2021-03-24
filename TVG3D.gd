@@ -10,9 +10,9 @@ var next = PoolVector3Array()
 
 var mesh : MeshInstance
 
-var trans_x: float = -5
-var trans_y: float = 10
-var trans_z: float = 5
+var trans_x: float = 0
+var trans_y: float = 0
+var trans_z: float = 0
 
 var rot_x: float
 var rot_y: float
@@ -71,17 +71,21 @@ func change_scale_x(value: float):
 func change_scale_y(value: float):
 	scale_y = value
 	transform()
+
+func change_scale_z(value: float):
+	scale_z = value
+	transform()
 	
 func change_shear_x(value: float):
 	shear_x = value
 	transform()
 	
 func change_shear_y(value: float):
-	shear_y = -value
+	shear_y = value
 	transform()
 	
 func change_shear_z(value: float):
-	shear_z = -value
+	shear_z = value
 	transform()
 
 func update_mesh():
@@ -101,12 +105,13 @@ func update_mesh():
 
 func transform():
 	for i in range(len(source)):
-		source[i] = next[i]
+		next[i] = source[i]
 		
 		var new = Vector3()
 		# Set scale
-#		new.x = next[i].x * scale_x
-#		new.y = next[i].y * scale_y
+		new.x = next[i].x * scale_x
+		new.y = next[i].y * scale_y
+		new.z = next[i].z * scale_z
 #
 #		var new2 = Vector2()
 #
