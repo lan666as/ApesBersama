@@ -13,7 +13,7 @@ func _on_TranslationSY_value_changed(value):
 	Drawing.change_translation_y(value)
 	
 func _on_TranslationSZ_value_changed(value):
-	Drawing.change_translation_y(value)
+	Drawing.change_translation_z(value)
 
 
 func _on_RotSX_value_changed(value: float):

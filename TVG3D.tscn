@@ -11,3 +11,9 @@ DrawingPath = NodePath("..")
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -0.25, -0.258819, 0.933013, -0.0669873, 0.965926, 0.25, -0.965926, 7.19671e-09, -0.258819, 4.08766, 0.746035, 0 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
+omni_range = 32.7369
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
