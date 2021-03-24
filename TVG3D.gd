@@ -16,12 +16,12 @@ var trans_z: float = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var vertices = PoolVector3Array()
-	vertices.push_back(Vector3(0, 1, 0))
-	vertices.push_back(Vector3(1, 0, 0))
-	vertices.push_back(Vector3(0, 0, 1))
+	source = PoolVector3Array()
+	source.push_back(Vector3(0, 1, 0))
+	source.push_back(Vector3(1, 0, 0))
+	source.push_back(Vector3(0, 0, 1))
 	# Initialize the ArrayMesh.
-	next = vertices
+	next = source
 	
 	mesh = MeshInstance.new()
 #	mesh.mesh = arr_mesh
@@ -66,7 +66,7 @@ func transform():
 #		source[i].y = new2.x * sin(rot * PI / 180) + new2.y * cos(rot * PI/180)
 		
 		# Set translation
-		source[i] = source[i] + Vector3(trans_x, trans_y, trans_z)
+		next[i] = next[i] + Vector3(trans_x, trans_y, trans_z)
 	update_mesh()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
