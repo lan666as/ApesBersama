@@ -41,39 +41,15 @@ func _ready():
 	source.push_back(Vector3(0,0,1))
 	source.push_back(Vector3(0,0,0))
 	
-#	source.push_back(Vector3(1,1,0))
-#	source.push_back(Vector3(1,1,1))
-#	source.push_back(Vector3(0,1,1))
-#	source.push_back(Vector3(0,1,0))
-
-
-	uvs.push_back(Vector2(0,0))
-	uvs.push_back(Vector2(0,1))
-	uvs.push_back(Vector2(1,1))
-	uvs.push_back(Vector2(1,0))
+	source.push_back(Vector3(1,1,0))
+	source.push_back(Vector3(1,1,1))
+	source.push_back(Vector3(0,1,1))
+	source.push_back(Vector3(0,1,0))
 	
-#	uvs.push_back(Vector2(0,0))
-#	uvs.push_back(Vector2(0,0))
-#	uvs.push_back(Vector2(0,0))
-#	uvs.push_back(Vector2(0,0))
-	
-#	uvs.push_back(Vector2(1,0))
-#	uvs.push_back(Vector2(1,1))
-#	uvs.push_back(Vector2(0,1))
-#	uvs.push_back(Vector2(0,0))
-	
-
-	var arr_mesh = ArrayMesh.new()
-	var arrays = []
-	arrays.resize(ArrayMesh.ARRAY_MAX)
-	arrays[ArrayMesh.ARRAY_VERTEX] = next
-	# Create the Mesh.
-	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_FAN, arrays)
 	
 	next = source
 
 	mesh = MeshInstance.new()
-	mesh.mesh = arr_mesh
 	add_child(mesh)
 
 
@@ -134,8 +110,13 @@ func update_mesh():
 	var arr_mesh = ArrayMesh.new()
 	var arrays = []
 	arrays.resize(ArrayMesh.ARRAY_MAX)
-	arrays[ArrayMesh.ARRAY_VERTEX] = next
-	# Create the Mesh.
+	arrays[ArrayMesh.ARRAY_VERTEX] = Array(next).slice(0,3)
+
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_FAN, arrays)
+	
+	arrays = []
+	arrays.resize(ArrayMesh.ARRAY_MAX)
+	arrays[ArrayMesh.ARRAY_VERTEX] = Array(next).slice(4,7)
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_FAN, arrays)
 	
 	mesh.queue_free()
