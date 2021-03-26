@@ -204,19 +204,22 @@ func transform():
 		new2.z = new.z + new.x * shear_z + new.y * shear_z
 
 #Jadikan satubaris
+		var new3 = Vector3()
 		# Set rotation X axis
-		next[i].x = new2.x * cos(rot_z * PI / 180) - new2.y * sin(rot_z * PI/180)
-		next[i].y = new2.x * sin(rot_z * PI / 180) + new2.y * cos(rot_z * PI/180)
-		next[i].z = new2.z
+		new3.x = new2.x
+		new3.y = new2.y * cos(rot_x * PI / 180) - new2.z * sin(rot_x * PI / 180)
+		new3.z = new2.y * sin(rot_x * PI / 180) + new2.z * cos(rot_x * PI / 180)
 
 		# Set rotation Y axis
-		next[i].x = new2.x * cos(rot_z * PI / 180) - new2.y * sin(rot_z * PI/180)
-		next[i].y = new2.x * sin(rot_z * PI / 180) + new2.y * cos(rot_z * PI/180)
-		next[i].z = new2.z
+		var new4 = Vector3()
+		new4.x = new3.x * cos(rot_y * PI / 180) + new3.z * sin(rot_y * PI / 180)
+		new4.y = new3.y
+		new4.z = new3.x * -sin(rot_y * PI / 180) + new3.z * cos(rot_y * PI / 180)
+		
 #		# Set rotation Z axis
-		next[i].x = new2.x * cos(rot_z * PI / 180) - new2.y * sin(rot_z * PI/180)
-		next[i].y = new2.x * sin(rot_z * PI / 180) + new2.y * cos(rot_z * PI/180)
-		next[i].z = new2.z
+		next[i].x = new4.x * cos(rot_z * PI / 180) - new4.y * sin(rot_z * PI / 180)
+		next[i].y = new4.x * sin(rot_z * PI / 180) + new4.y * cos(rot_z * PI / 180)
+		next[i].z = new4.z
 		
 		# Set translation
 		next[i] = next[i] + Vector3(trans_x, trans_y, trans_z)
