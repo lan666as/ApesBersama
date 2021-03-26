@@ -33,41 +33,101 @@ var color = Color(0.9, 0.1, 0.1)
 
 
 # Called when the node enters the scene tree for the first time.
+#func _ready():
+#	source = PoolVector3Array()
+#
+#	source.push_back(Vector3(1,0,0))
+#	source.push_back(Vector3(1,0,1))
+#	source.push_back(Vector3(0,0,1))
+#	source.push_back(Vector3(0,0,0))
+#
+#	source.push_back(Vector3(1,1,0))
+#	source.push_back(Vector3(1,1,1))
+#	source.push_back(Vector3(0,1,1))
+#	source.push_back(Vector3(0,1,0))
+#
+#
+#	next = source
+#
+#	mesh = MeshInstance.new()
+#	add_child(mesh)
+#
+#
+#	transform()
+
+#	var arr = []
+#	arr.resize(ArrayMesh.ARRAY_MAX)
+#	var source = PoolVector3Array()
+#	source.append(Vector3(1, 1, 1))
+#	source.append(Vector3(1, 1, -1))
+#	source.append(Vector3(-1, 1, 1))
+#	source.append(Vector3(-1, 1, -1))
+#	source.append(Vector3(1, -1, 1))
+#	source.append(Vector3(1, -1, -1))
+#	source.append(Vector3(-1, -1, 1))
+#	source.append(Vector3(-1, -1, -1))
+#	arr[ArrayMesh.ARRAY_VERTEX] = source
+#	mesh = MeshInstance.new()
+#	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+#	next = source
+#	add_child(mesh)
+#	transform()
+#	# pass # Replace with function body.
+
+var normals = PoolVector3Array()
+var indices = PoolIntArray()
+
 func _ready():
-	source = PoolVector3Array()
-	
-	source.push_back(Vector3(1,0,0))
-	source.push_back(Vector3(1,0,1))
-	source.push_back(Vector3(0,0,1))
-	source.push_back(Vector3(0,0,0))
-	
-	source.push_back(Vector3(1,1,0))
-	source.push_back(Vector3(1,1,1))
-	source.push_back(Vector3(0,1,1))
-	source.push_back(Vector3(0,1,0))
-	
-	
+#	mesh = MeshInstance.new()
+	mesh = $MeshInstance
+#	add_child(mesh)
+	var arr_mesh = ArrayMesh.new()
+	var mesh_arrays = []
+	mesh_arrays.resize(ArrayMesh.ARRAY_MAX)
+	make_cube(0,1,0)
+	mesh_arrays[Mesh.ARRAY_VERTEX] = source
+	mesh_arrays[Mesh.ARRAY_NORMAL] = normals
+	mesh_arrays[Mesh.ARRAY_INDEX] = indices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_arrays)
+	mesh.mesh = arr_mesh
 	next = source
-
-	mesh = MeshInstance.new()
+#	mesh = MeshInstance.new()
 	add_child(mesh)
-
-
-	transform()
+#	mesh.material_override.albedo_color = Color("#ffb2d90a")
 	
-	# pass # Replace with function body.
+	
+	
+func make_cube(x,y,z):
+	#left
+	make_quad(Vector3(x,y,z), Vector3(x,y+1,z), Vector3(x,y+1,z+1), Vector3(x,y,z+1))
+	#right
+	make_quad(Vector3(x+1,y,z+1), Vector3(x+1,y+1,z+1), Vector3(x+1,y+1,z), Vector3(x+1,y,z))
+	#down
+	make_quad(Vector3(x+1,y,z), Vector3(x,y,z), Vector3(x,y,z+1), Vector3(x+1,y,z+1))
+	#up
+	make_quad(Vector3(x+1,y+1,z+1), Vector3(x,y+1,z+1), Vector3(x,y+1,z), Vector3(x+1,y+1,z))
+	#back
+	make_quad(Vector3(x+1,y,z), Vector3(x+1,y+1,z), Vector3(x,y+1,z), Vector3(x,y,z))
+	#front
+	make_quad(Vector3(x,y,z+1), Vector3(x,y+1,z+1), Vector3(x+1,y+1,z+1), Vector3(x+1,y,z+1))
+
+func make_quad(a,b,c,d):
+	var length = len(source)
+	indices.append_array([length, length+1, length+2, length, length+2, length+3])
+	source.append_array([a,b,c,d])
+	normals.append_array([a.normalized(),b.normalized(),c.normalized(),d.normalized()])
 
 func change_translation_x(value: float):
 	# Range from -50 to 50
-	trans_x = (value - 50)
+	trans_x = (value)
 	transform()
 
 func change_translation_y(value: float):
-	trans_y = (50 - value)
+	trans_y = (value)
 	transform()
 	
 func change_translation_z(value: float):
-	trans_z = (50 - value)
+	trans_z = (value)
 	transform()
 	
 func rotate_x(value: float):
@@ -107,22 +167,23 @@ func change_shear_z(value: float):
 	transform()
 
 func update_mesh():
+#	mesh.queue_free()
+#	mesh = MeshInstance.new()
+#	add_child(mesh)
 	var arr_mesh = ArrayMesh.new()
-	var arrays = []
-	arrays.resize(ArrayMesh.ARRAY_MAX)
-	arrays[ArrayMesh.ARRAY_VERTEX] = Array(next).slice(0,3)
-
-	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_FAN, arrays)
-	
-	arrays = []
-	arrays.resize(ArrayMesh.ARRAY_MAX)
-	arrays[ArrayMesh.ARRAY_VERTEX] = Array(next).slice(4,7)
-	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLE_FAN, arrays)
-	
-	mesh.queue_free()
-	mesh = MeshInstance.new()
+	var mesh_arrays = []
+	mesh_arrays.resize(ArrayMesh.ARRAY_MAX)
+	mesh_arrays[Mesh.ARRAY_VERTEX] = next
+	mesh_arrays[Mesh.ARRAY_NORMAL] = normals
+	mesh_arrays[Mesh.ARRAY_INDEX] = indices
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_arrays)
 	mesh.mesh = arr_mesh
-	add_child(mesh)
+	
+#	mesh = MeshInstance.new()
+#	add_child(mesh)
+	print(indices)
+	print('\n')
+	print('\n')
 #	pass
 
 func transform():
