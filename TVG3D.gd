@@ -1,10 +1,4 @@
-
 extends Spatial
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 var source = PoolVector3Array()
 var next = PoolVector3Array()
@@ -16,9 +10,9 @@ var trans_x: float = 0
 var trans_y: float = 0
 var trans_z: float = 0
 
-var rot_x: float
-var rot_y: float
-var rot_z: float
+var rot_x: float = 0
+var rot_y: float = 0
+var rot_z: float = 0
 
 var scale_x: float = 1
 var scale_y: float = 1
@@ -31,69 +25,39 @@ var shear_z: float = 0
 var mat = SpatialMaterial.new()
 var color = Color(0.9, 0.1, 0.1)
 
-
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-#	source = PoolVector3Array()
-#
-#	source.push_back(Vector3(1,0,0))
-#	source.push_back(Vector3(1,0,1))
-#	source.push_back(Vector3(0,0,1))
-#	source.push_back(Vector3(0,0,0))
-#
-#	source.push_back(Vector3(1,1,0))
-#	source.push_back(Vector3(1,1,1))
-#	source.push_back(Vector3(0,1,1))
-#	source.push_back(Vector3(0,1,0))
-#
-#
-#	next = source
-#
-#	mesh = MeshInstance.new()
-#	add_child(mesh)
-#
-#
-#	transform()
-
-#	var arr = []
-#	arr.resize(ArrayMesh.ARRAY_MAX)
-#	var source = PoolVector3Array()
-#	source.append(Vector3(1, 1, 1))
-#	source.append(Vector3(1, 1, -1))
-#	source.append(Vector3(-1, 1, 1))
-#	source.append(Vector3(-1, 1, -1))
-#	source.append(Vector3(1, -1, 1))
-#	source.append(Vector3(1, -1, -1))
-#	source.append(Vector3(-1, -1, 1))
-#	source.append(Vector3(-1, -1, -1))
-#	arr[ArrayMesh.ARRAY_VERTEX] = source
-#	mesh = MeshInstance.new()
-#	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-#	next = source
-#	add_child(mesh)
-#	transform()
-#	# pass # Replace with function body.
-
 var normals = PoolVector3Array()
 var indices = PoolIntArray()
 
 func _ready():
-#	mesh = MeshInstance.new()
+	$Hud/VBoxContainer/GridContainer/TranslationSX_Label.text = str(trans_x)
+	$Hud/VBoxContainer/GridContainer/TranslationSY_Label.text = str(trans_y)
+	$Hud/VBoxContainer/GridContainer/TranslationSZ_Label.text = str(trans_z)
+	
+	$Hud/VBoxContainer/GridContainer/RotSX_Label.text = str(rot_x)
+	$Hud/VBoxContainer/GridContainer/RotSY_Label.text = str(rot_y)
+	$Hud/VBoxContainer/GridContainer/RotSZ_Label.text = str(rot_z)
+	
+	$Hud/VBoxContainer/GridContainer/ScaleSX_Label.text = str(scale_x)
+	$Hud/VBoxContainer/GridContainer/ScaleSY_Label.text = str(scale_y)
+	$Hud/VBoxContainer/GridContainer/ScaleSZ_Label.text = str(scale_z)
+	
+	$Hud/VBoxContainer/GridContainer/ShearSX_Label.text = str(shear_x)
+	$Hud/VBoxContainer/GridContainer/ShearSY_Label.text = str(shear_y)
+	$Hud/VBoxContainer/GridContainer/ShearSZ_Label.text = str(shear_z)
+	
 	mesh = $MeshInstance
-#	add_child(mesh)
+	mesh.use_in_baked_light = true
 	var arr_mesh = ArrayMesh.new()
 	var mesh_arrays = []
 	mesh_arrays.resize(ArrayMesh.ARRAY_MAX)
-	make_cube(0,1,0)
+	make_cube(0,0,0)
 	mesh_arrays[Mesh.ARRAY_VERTEX] = source
 	mesh_arrays[Mesh.ARRAY_NORMAL] = normals
 	mesh_arrays[Mesh.ARRAY_INDEX] = indices
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_arrays)
 	mesh.mesh = arr_mesh
 	next = source
-#	mesh = MeshInstance.new()
 	add_child(mesh)
-#	mesh.material_override.albedo_color = Color("#ffb2d90a")
 	
 	
 	
@@ -118,58 +82,66 @@ func make_quad(a,b,c,d):
 	normals.append_array([a.normalized(),b.normalized(),c.normalized(),d.normalized()])
 
 func change_translation_x(value: float):
-	# Range from -50 to 50
 	trans_x = (value)
+	$Hud/VBoxContainer/GridContainer/TranslationSX_Label.text = str(trans_x)
 	transform()
 
 func change_translation_y(value: float):
 	trans_y = (value)
+	$Hud/VBoxContainer/GridContainer/TranslationSY_Label.text = str(trans_y)
 	transform()
 	
 func change_translation_z(value: float):
 	trans_z = (value)
+	$Hud/VBoxContainer/GridContainer/TranslationSZ_Label.text = str(trans_z)
 	transform()
 	
 func rotate_x(value: float):
 	rot_x = value
+	$Hud/VBoxContainer/GridContainer/RotSX_Label.text = str(rot_x)
 	transform()
 	
 func rotate_y(value: float):
 	rot_y = value
+	$Hud/VBoxContainer/GridContainer/RotSY_Label.text = str(rot_y)
 	transform()
 	
 func rotate_z(value: float):
 	rot_z = value
+	$Hud/VBoxContainer/GridContainer/RotSZ_Label.text = str(rot_z)
 	transform()
 	
 func change_scale_x(value: float):
 	scale_x = value
+	$Hud/VBoxContainer/GridContainer/ScaleSX_Label.text = str(scale_x)
 	transform()
 
 func change_scale_y(value: float):
 	scale_y = value
+	$Hud/VBoxContainer/GridContainer/ScaleSY_Label.text = str(scale_y)
 	transform()
 
 func change_scale_z(value: float):
 	scale_z = value
+	$Hud/VBoxContainer/GridContainer/ScaleSZ_Label.text = str(scale_z)
 	transform()
 	
 func change_shear_x(value: float):
 	shear_x = value
+	$Hud/VBoxContainer/GridContainer/ShearSX_Label.text = str(shear_x)
 	transform()
 	
 func change_shear_y(value: float):
 	shear_y = value
+	$Hud/VBoxContainer/GridContainer/ShearSY_Label.text = str(shear_y)
 	transform()
 	
 func change_shear_z(value: float):
 	shear_z = value
+	$Hud/VBoxContainer/GridContainer/ShearSZ_Label.text = str(shear_z)
 	transform()
 
 func update_mesh():
-#	mesh.queue_free()
-#	mesh = MeshInstance.new()
-#	add_child(mesh)
 	var arr_mesh = ArrayMesh.new()
 	var mesh_arrays = []
 	mesh_arrays.resize(ArrayMesh.ARRAY_MAX)
@@ -179,26 +151,21 @@ func update_mesh():
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_arrays)
 	mesh.mesh = arr_mesh
 	
-#	mesh = MeshInstance.new()
-#	add_child(mesh)
-	print(indices)
-	print('\n')
-	print('\n')
-#	pass
 
 func transform():
 	for i in range(len(source)):
 		next[i] = source[i]
 		
-		var new = Vector3()
+		
 		# Set scale
+		var new = Vector3()
+		
 		new.x = next[i].x * scale_x
 		new.y = next[i].y * scale_y
 		new.z = next[i].z * scale_z
-#
+
+		# Set shear
 		var new2 = Vector3()
-#
-#		# Set shear
 		new2.x = new.x + new.y * shear_x + new.z * shear_x
 		new2.y = new.y + new.x * shear_y + new.z * shear_y
 		new2.z = new.z + new.x * shear_z + new.y * shear_z
@@ -224,6 +191,3 @@ func transform():
 		# Set translation
 		next[i] = next[i] + Vector3(trans_x, trans_y, trans_z)
 	update_mesh()
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
